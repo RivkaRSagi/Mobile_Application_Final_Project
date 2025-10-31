@@ -26,6 +26,8 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.Priority
+import com.google.android.gms.maps.model.Circle
+import com.google.android.gms.maps.model.CircleOptions
 
 class MapActivity : AppCompatActivity(),  OnMapReadyCallback{
 
@@ -34,6 +36,7 @@ class MapActivity : AppCompatActivity(),  OnMapReadyCallback{
     private lateinit var locationRequest: LocationRequest
     private lateinit var locationCallback: LocationCallback
     private var currentLocation: Location? = null
+    private var circle: Circle? = null
 
     private val REQUEST_CODE_PERMISSION = 299
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,10 +95,25 @@ class MapActivity : AppCompatActivity(),  OnMapReadyCallback{
         locationCallback = object : LocationCallback(){
             override fun onLocationResult(locationResult: LocationResult) {
                 super.onLocationResult(locationResult)
-                val location = locationResult.lastLocation ?: return
-                val latLng = LatLng(location.latitude, location.longitude)
+                currentLocation = locationResult.lastLocation ?: return
+                val latLng = LatLng(currentLocation!!.latitude, currentLocation!!.longitude)
                 mainMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 19f))
+
+                if(circle == null){
+                    circle = mainMap.addCircle(
+                        CircleOptions()
+                            .center(currentLocation.let { LatLng(it!!.latitude, it.longitude) })
+                            .radius(30.0)
+                            .strokeColor(getColor(R.color.mapStroke))
+                            .fillColor(getColor(R.color.mapCircle))
+                            .strokeWidth(2f)
+                    )
+                }else{
+                    circle?.center = latLng
+                    circle?.radius = 30.0
+                }
             }
+
         }
 
         fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())

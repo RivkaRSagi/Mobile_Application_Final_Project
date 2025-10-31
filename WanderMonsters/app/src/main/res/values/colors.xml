@@ -3,4 +3,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="navColor">#c1e1ec</color>
+    <color name="mapStroke">#72bcd4</color>
+    <color name="mapCircle">#5072bcd4</color>
 </resources>
