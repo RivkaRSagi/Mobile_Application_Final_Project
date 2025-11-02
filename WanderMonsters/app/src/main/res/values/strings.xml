@@ -2,4 +2,35 @@
     <string name="app_name">WanderMonsters</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="rarity">
+        <item>Common</item>
+        <item>Uncommon</item>
+        <item>Rare</item>
+        <item>Epic</item>
+        <item>Legendary</item>
+    </string-array>
+    <string-array name="hobbies">
+        <item>Knitting</item>
+        <item>Dancing</item>
+        <item>Golf</item>
+        <item>Painting</item>
+        <item>Pottery</item>
+        <item>Singing</item>
+        <item>Poetry</item>
+        <item>Photography</item>
+        <item>Reading</item>
+        <item>Weight Lifting</item>
+        <item>Collecting T-shirts</item>
+        <item>Cooking</item>
+        <item>Baking</item>
+        <item>Video Games</item>
+        <item>Puzzles</item>
+        <item>Sudoku</item>
+        <item>Math</item>
+        <item>Hiking</item>
+        <item>Bird Watching</item>
+        <item>Sky Diving</item>
+        <item>Skiing</item>
+        <item>Bubble Baths</item>
+    </string-array>
 </resources>

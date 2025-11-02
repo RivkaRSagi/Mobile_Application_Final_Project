@@ -5,4 +5,9 @@
     <color name="navColor">#c1e1ec</color>
     <color name="mapStroke">#72bcd4</color>
     <color name="mapCircle">#5072bcd4</color>
+    <color name="Common">#8CBDBC</color>
+    <color name="Uncommon">#01D51B</color>
+    <color name="Rare">#031BA4</color>
+    <color name="Epic">#7F0195</color>
+    <color name="Legendary">#FF8400</color>
 </resources>
