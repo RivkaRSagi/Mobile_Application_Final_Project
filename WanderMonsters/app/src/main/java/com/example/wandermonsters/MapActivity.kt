@@ -174,6 +174,7 @@ class MapActivity : AppCompatActivity(),  OnMapReadyCallback{
         return LatLng(location.latitude + latOff, location.longitude + lngOff)
     }
 
+    //AI generated function to convert a vector drawable to a Bitmap. This is required for the google maps marker icon.
     fun getBitmapFromVector(context: Context, drawableId: Int): BitmapDescriptor {
         val vectorDrawable = ContextCompat.getDrawable(context, drawableId)!!
         vectorDrawable.setBounds(0, 0, vectorDrawable.intrinsicWidth, vectorDrawable.intrinsicHeight)
