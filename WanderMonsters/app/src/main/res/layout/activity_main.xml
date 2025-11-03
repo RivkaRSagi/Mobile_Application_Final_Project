@@ -32,4 +32,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@+id/collectionButton"/>
 
+    <Button
+        android:id="@+id/signInButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" Sign In"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/mapButton"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

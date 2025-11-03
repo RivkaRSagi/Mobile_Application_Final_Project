@@ -30,5 +30,11 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, MapActivity::class.java)
             startActivity(intent)
         }
+
+        val sign_in = findViewById<Button>(R.id.signInButton)
+        sign_in.setOnClickListener {
+            val intent = Intent(this, LoginPage::class.java)
+            startActivity(intent)
+        }
     }
 }
