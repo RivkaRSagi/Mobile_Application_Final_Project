@@ -42,7 +42,8 @@ class MyCollection : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val listView = view.findViewById<ListView>(R.id.MyList)
         val items = listOf(
-            ListValues.MyCollection_listItem("Joe", "SnailBoo", R.drawable.snail_boo)
+            ListValues.MyCollection_listItem("Joe", "SnailBoo", R.drawable.snail_boo),
+            ListValues.MyCollection_listItem("Bob", "GreyLock", R.drawable.gray_lock)
         )
 
         val adapter = MyCollection_listAdapter(requireContext(), items)
