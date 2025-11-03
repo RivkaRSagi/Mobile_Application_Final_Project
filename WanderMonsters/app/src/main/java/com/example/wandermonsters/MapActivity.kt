@@ -1,7 +1,10 @@
 package com.example.wandermonsters
 
 import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import java.util.concurrent.TimeUnit
 import android.os.Bundle
 import android.widget.Toast
@@ -26,8 +29,13 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.Priority
+import com.google.android.gms.maps.model.BitmapDescriptor
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.Circle
 import com.google.android.gms.maps.model.CircleOptions
+import com.google.android.gms.maps.model.Marker
+import kotlin.math.nextDown
+import androidx.core.graphics.createBitmap
 
 class MapActivity : AppCompatActivity(),  OnMapReadyCallback{
 
@@ -37,6 +45,7 @@ class MapActivity : AppCompatActivity(),  OnMapReadyCallback{
     private lateinit var locationCallback: LocationCallback
     private var currentLocation: Location? = null
     private var circle: Circle? = null
+    private val monsterEvents = ArrayList<Marker>()
 
     private val REQUEST_CODE_PERMISSION = 299
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,11 +66,21 @@ class MapActivity : AppCompatActivity(),  OnMapReadyCallback{
         mapFragment.getMapAsync(this)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         startLocationUpdates()
+
     }
 
     override fun onMapReady(p0: GoogleMap) {
         mainMap = p0
         mainMap.isMyLocationEnabled = checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+
+        mainMap.setOnMarkerClickListener { marker ->
+            if (marker.title == "monster_event") {
+                Toast.makeText(this, "Monster Event Clicked!", Toast.LENGTH_SHORT).show()
+                monsterEvents.remove(marker)
+                marker.remove()
+            }
+            true
+        }
     }
 
     override fun onRequestPermissionsResult(
@@ -98,19 +117,41 @@ class MapActivity : AppCompatActivity(),  OnMapReadyCallback{
                 currentLocation = locationResult.lastLocation ?: return
                 val latLng = LatLng(currentLocation!!.latitude, currentLocation!!.longitude)
                 mainMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 19f))
+                val maxDistance = 30.0
 
-                if(circle == null){
+                if (circle == null) {
                     circle = mainMap.addCircle(
                         CircleOptions()
                             .center(currentLocation.let { LatLng(it!!.latitude, it.longitude) })
-                            .radius(30.0)
+                            .radius(maxDistance)
                             .strokeColor(getColor(R.color.mapStroke))
                             .fillColor(getColor(R.color.mapCircle))
                             .strokeWidth(2f)
                     )
-                }else{
+                } else {
                     circle?.center = latLng
-                    circle?.radius = 30.0
+                    circle?.radius = maxDistance
+                }
+
+                if (monsterEvents.size < 5) {
+                    val eventLocation = generateEventIcons(latLng, 30.0)
+                    val event = mainMap.addMarker(
+                        MarkerOptions()
+                            .position(eventLocation)
+                            .title("monster_event")
+                            .icon(getBitmapFromVector(applicationContext, R.drawable.marker_icon))
+                    )
+
+                    monsterEvents.add(event!!)
+                }
+
+                monsterEvents.forEach { marker ->
+                    val distance = FloatArray(1)
+                    Location.distanceBetween(currentLocation!!.latitude, currentLocation!!.longitude, marker.position.latitude, marker.position.longitude, distance)
+                    if (distance[0] > maxDistance) {
+                        marker.remove()
+                        monsterEvents.remove(marker)
+                    }
                 }
             }
 
@@ -118,4 +159,28 @@ class MapActivity : AppCompatActivity(),  OnMapReadyCallback{
 
         fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
     }
+
+    private fun generateEventIcons(location: LatLng, radius: Double): LatLng{
+        val random = java.util.Random()
+        val radiusDeg = radius / 111000f // this is a rough conversion
+
+        val u = random.nextDouble()
+        val v = random.nextDouble()
+        val w = radiusDeg * Math.sqrt(u)
+        val t = 2 * Math.PI * v
+        val latOff = w * Math.cos(t)
+        val lngOff = w * Math.sin(t) / Math.cos(Math.toRadians(location.latitude))
+
+        return LatLng(location.latitude + latOff, location.longitude + lngOff)
+    }
+
+    fun getBitmapFromVector(context: Context, drawableId: Int): BitmapDescriptor {
+        val vectorDrawable = ContextCompat.getDrawable(context, drawableId)!!
+        vectorDrawable.setBounds(0, 0, vectorDrawable.intrinsicWidth, vectorDrawable.intrinsicHeight)
+        val bitmap = createBitmap(vectorDrawable.intrinsicWidth, vectorDrawable.intrinsicHeight)
+        val canvas = Canvas(bitmap)
+        vectorDrawable.draw(canvas)
+        return BitmapDescriptorFactory.fromBitmap(bitmap)
+    }
+
 }
