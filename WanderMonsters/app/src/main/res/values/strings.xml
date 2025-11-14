@@ -34,30 +34,34 @@
         <item>Bubble Baths</item>
     </string-array>
     <string-array name="monsters">
-        <item>Arrow</item>
-        <item>Arvolok</item>
-        <item>Awstrich</item>
         <item>Bonzoa</item>
-        <item>Bramble</item>
-        <item>Breezle</item>
-        <item>CheckerLord</item>
-        <item>Clastan</item>
-        <item>Creepi</item>
-        <item>CurlyGator</item>
-        <item>FireFly</item>
-        <item>FlyMousse</item>
-        <item>Freezy</item>
-        <item>Granite</item>
         <item>GrayLock</item>
+        <item>ScowlGee</item>
+        <item>Squirmy</item>
+        <item>SnailBoo</item>
+
+        <item>Breezle</item>
         <item>KrikiToo</item>
         <item>PiggyWhirl</item>
-        <item>PsyCactus</item>
         <item>Rattimus</item>
         <item>Salmoosus</item>
-        <item>ScowlGee</item>
+
+        <item>Arrow</item>
+        <item>CurlyGator</item>
+        <item>Freezy</item>
+        <item>PsyCactus</item>
         <item>SkelyWalker</item>
-        <item>SnailBoo</item>
-        <item>Squirmy</item>
+
+        <item>CheckerLord</item>
+        <item>Creepi</item>
+        <item>FireFly</item>
+        <item>FlyMousse</item>
+        <item>Granite</item>
+
+        <item>Arvolok</item>
+        <item>Awstrich</item>
+        <item>Bramble</item>
+        <item>Clastan</item>
         <item>TenTwirl</item>
     </string-array>
 </resources>
