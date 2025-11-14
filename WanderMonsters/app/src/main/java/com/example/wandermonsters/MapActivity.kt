@@ -65,8 +65,8 @@ class MapActivity : AppCompatActivity(),  OnMapReadyCallback{
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-        startLocationUpdates()
 
+        startLocationUpdates()
     }
 
     override fun onMapReady(p0: GoogleMap) {
@@ -81,6 +81,8 @@ class MapActivity : AppCompatActivity(),  OnMapReadyCallback{
             }
             true
         }
+
+
     }
 
     override fun onRequestPermissionsResult(
