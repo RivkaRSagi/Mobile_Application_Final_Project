@@ -1,6 +1,5 @@
 package com.example.wandermonsters
 
-import android.graphics.pdf.models.ListItem
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -42,8 +41,8 @@ class MyCollection : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val listView = view.findViewById<ListView>(R.id.MyList)
         val items = listOf(
-            ListValues.MyCollection_listItem("Joe", "SnailBoo", R.drawable.snail_boo),
-            ListValues.MyCollection_listItem("Bob", "GreyLock", R.drawable.gray_lock)
+            ListValues.MyCollection_listItem("Joe", "SnailBoo", R.drawable.snailboo),
+            ListValues.MyCollection_listItem("Bob", "GreyLock", R.drawable.graylock)
         )
 
         val adapter = MyCollection_listAdapter(requireContext(), items)

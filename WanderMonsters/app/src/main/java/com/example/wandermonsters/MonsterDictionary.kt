@@ -12,7 +12,6 @@ import android.widget.LinearLayout
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
-import com.google.android.material.tabs.TabLayout
 
 //// TODO: Rename parameter arguments, choose names that match
 //// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -49,8 +48,8 @@ class MonsterDictionary : Fragment() {
         val table = view.findViewById<TableLayout>(R.id.monsterTable)
 
         val tableData = listOf(
-            ListValues.Dictionary_table(R.drawable.snail_boo, "SnailBoo", "Common"),
-            ListValues.Dictionary_table(R.drawable.gray_lock, "GrayLock", "Rare"),
+            ListValues.Dictionary_table(R.drawable.snailboo, "SnailBoo", "Common"),
+            ListValues.Dictionary_table(R.drawable.graylock, "GrayLock", "Rare"),
             ListValues.Dictionary_table(R.drawable.bonzoa, "Bonzoa", " Super Rare")
         )
 
