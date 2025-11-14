@@ -210,21 +210,21 @@ class DatabaseHelper (context: Context): SQLiteOpenHelper(
         db.execSQL("INSERT INTO MonsterDefinitions (Type_Name, Image, Discovered, Rarity) VALUES (?,?,?,?)",
             arrayOf("Bonzoa", "bonzoa.png", 0, 0))
         db.execSQL("INSERT INTO MonsterDefinitions (Type_Name, Image, Discovered, Rarity) VALUES (?,?,?,?)",
-            arrayOf("GrayLock", "gray_lock.png", 0, 0))
+            arrayOf("GrayLock", "graylock.png", 0, 0))
         db.execSQL("INSERT INTO MonsterDefinitions (Type_Name, Image, Discovered, Rarity) VALUES (?,?,?,?)",
-            arrayOf("ScowlGee", "scowl_gee.png", 0, 0))
+            arrayOf("ScowlGee", "scowlgee.png", 0, 0))
         db.execSQL("INSERT INTO MonsterDefinitions (Type_Name, Image, Discovered, Rarity) VALUES (?,?,?,?)",
             arrayOf("Squirmy", "squirmy.png", 0, 0))
         db.execSQL("INSERT INTO MonsterDefinitions (Type_Name, Image, Discovered, Rarity) VALUES (?,?,?,?)",
-            arrayOf("SnailBoo", "snail_boo.png", 0, 0))
+            arrayOf("SnailBoo", "snailboo.png", 0, 0))
 
         //uncommon monsters
         db.execSQL("INSERT INTO MonsterDefinitions (Type_Name, Image, Discovered, Rarity) VALUES (?,?,?,?)",
             arrayOf("Breezle", "breezle.png", 0, 1))
         db.execSQL("INSERT INTO MonsterDefinitions (Type_Name, Image, Discovered, Rarity) VALUES (?,?,?,?)",
-            arrayOf("KrikiToo", "kriki_too.png", 0, 1))
+            arrayOf("KrikiToo", "krikitoo.png", 0, 1))
         db.execSQL("INSERT INTO MonsterDefinitions (Type_Name, Image, Discovered, Rarity) VALUES (?,?,?,?)",
-            arrayOf("PiggyWhirl", "piggy_whirl.png", 0, 1))
+            arrayOf("PiggyWhirl", "piggywhirl.png", 0, 1))
         db.execSQL("INSERT INTO MonsterDefinitions (Type_Name, Image, Discovered, Rarity) VALUES (?,?,?,?)",
             arrayOf("Rattimus", "rattimus.png", 0, 1))
         db.execSQL("INSERT INTO MonsterDefinitions (Type_Name, Image, Discovered, Rarity) VALUES (?,?,?,?)",
@@ -234,23 +234,23 @@ class DatabaseHelper (context: Context): SQLiteOpenHelper(
         db.execSQL("INSERT INTO MonsterDefinitions (Type_Name, Image, Discovered, Rarity) VALUES (?,?,?,?)",
             arrayOf("Arrow", "arrow.png", 0, 2))
         db.execSQL("INSERT INTO MonsterDefinitions (Type_Name, Image, Discovered, Rarity) VALUES (?,?,?,?)",
-            arrayOf("CurlyGator", "curly_gator.png", 0, 2))
+            arrayOf("CurlyGator", "curlygator.png", 0, 2))
         db.execSQL("INSERT INTO MonsterDefinitions (Type_Name, Image, Discovered, Rarity) VALUES (?,?,?,?)",
             arrayOf("Freezy", "freezy.png", 0, 2))
         db.execSQL("INSERT INTO MonsterDefinitions (Type_Name, Image, Discovered, Rarity) VALUES (?,?,?,?)",
-            arrayOf("PsyCactus", "psy_cactus.png", 0, 2))
+            arrayOf("PsyCactus", "psyactus.png", 0, 2))
         db.execSQL("INSERT INTO MonsterDefinitions (Type_Name, Image, Discovered, Rarity) VALUES (?,?,?,?)",
-            arrayOf("SkelyWalker", "skely_walker.png", 0, 2))
+            arrayOf("SkelyWalker", "skelywalker.png", 0, 2))
 
         //epic monsters
         db.execSQL("INSERT INTO MonsterDefinitions (Type_Name, Image, Discovered, Rarity) VALUES (?,?,?,?)",
-            arrayOf("CheckerLord", "checker_lord.png", 0, 3))
+            arrayOf("CheckerLord", "checkerlord.png", 0, 3))
         db.execSQL("INSERT INTO MonsterDefinitions (Type_Name, Image, Discovered, Rarity) VALUES (?,?,?,?)",
             arrayOf("Creepi", "creepi.png", 0, 3))
         db.execSQL("INSERT INTO MonsterDefinitions (Type_Name, Image, Discovered, Rarity) VALUES (?,?,?,?)",
-            arrayOf("FireFly", "fire_fly.png", 0, 3))
+            arrayOf("FireFly", "firefly.png", 0, 3))
         db.execSQL("INSERT INTO MonsterDefinitions (Type_Name, Image, Discovered, Rarity) VALUES (?,?,?,?)",
-            arrayOf("FlyMousse", "fly_mousse.png", 0, 3))
+            arrayOf("FlyMousse", "flymousse.png", 0, 3))
         db.execSQL("INSERT INTO MonsterDefinitions (Type_Name, Image, Discovered, Rarity) VALUES (?,?,?,?)",
             arrayOf("Granite", "granite.png", 0, 3))
 
@@ -265,7 +265,7 @@ class DatabaseHelper (context: Context): SQLiteOpenHelper(
         db.execSQL("INSERT INTO MonsterDefinitions (Type_Name, Image, Discovered, Rarity) VALUES (?,?,?,?)",
             arrayOf("Clastan", "clastan.png", 0, 4))
         db.execSQL("INSERT INTO MonsterDefinitions (Type_Name, Image, Discovered, Rarity) VALUES (?,?,?,?)",
-            arrayOf("TenTwirl", "ten_twirl.png", 0, 4))
+            arrayOf("TenTwirl", "tentwirl.png", 0, 4))
 
     }
 
