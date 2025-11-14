@@ -36,5 +36,11 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, LoginPage::class.java)
             startActivity(intent)
         }
+
+        val mini_game = findViewById<Button>(R.id.miniGameButton)
+        mini_game.setOnClickListener {
+            val intent = Intent(this, MiniGameActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
