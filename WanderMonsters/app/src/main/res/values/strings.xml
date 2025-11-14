@@ -64,4 +64,31 @@
         <item>Clastan</item>
         <item>TenTwirl</item>
     </string-array>
+    <string-array name="images">
+        <item>bonzoa.png</item>
+        <item>gray_lock.png</item>
+        <item>scowl_gee.png</item>
+        <item>squirmy.png</item>
+        <item>snail_boo.png</item>
+        <item>breezle.png</item>
+        <item>kriki_too.png</item>
+        <item>piggy_whirl.png</item>
+        <item>rattimus.png</item>
+        <item>salmosus.png</item>
+        <item>arrow.png</item>
+        <item>curly_gator.png</item>
+        <item>freezy.png</item>
+        <item>psy_cactus.png</item>
+        <item>skely_walker.png</item>
+        <item>checker_lord.png</item>
+        <item>creepi.png</item>
+        <item>fire_fly.png</item>
+        <item>fly_mousse.png</item>
+        <item>granite.png</item>
+        <item>arvolok.png</item>
+        <item>awstrich.png</item>
+        <item>bramble.png</item>
+        <item>clastan.png</item>
+        <item>ten_twirl.png</item>
+    </string-array>
 </resources>

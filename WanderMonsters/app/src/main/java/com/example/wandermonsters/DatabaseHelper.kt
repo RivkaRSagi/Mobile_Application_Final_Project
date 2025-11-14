@@ -35,13 +35,14 @@ class DatabaseHelper (context: Context): SQLiteOpenHelper(
                 Owner_ID INTEGER NOT NULL,
                 Monster_ID INTEGER PRIMARY KEY AUTOINCREMENT,
                 Name TEXT NOT NULL,
-                Type INTEGER NOT NULL,
+                Type TEXT NOT NULL,
                 Size FLOAT NOT NULL,
                 Weight FLOAT NOT NULL,
                 Intellect INTEGER NOT NULL,
                 Hobby INTEGER NOT NULL,
                 Rarity INTEGER NOT NULL,
-                FOREIGN KEY (Owner_ID) REFERENCES Accounts(id)
+                FOREIGN KEY (Owner_ID) REFERENCES Accounts(id),
+                FOREIGN KEY (Type) REFERENCES MonsterDefinitions(Type_Name)
                 )
             """.trimIndent()
         )
@@ -107,10 +108,13 @@ class DatabaseHelper (context: Context): SQLiteOpenHelper(
     fun getPetMonster(petID: Int): Monster {
         val db = readableDatabase
         val cursor = db.rawQuery(
-            "SELECT Name, Type, Size, Weight, Intellect, Hobby, Rarity FROM PetMonsters WHERE Monster_ID = ?",
+            "SELECT PetMonsters.Name, PetMonsters.Type, PetMonsters.Size, PetMonsters.Weight, " +
+                    "PetMonsters.Intellect, PetMonsters.Hobby, PetMonsters.Rarity, MonsterDefinitions.Image " +
+            " FROM PetMonsters JOIN MonsterDefinitions ON PetMonsters.Type = MonsterDefinitions.Type_Name " +
+            " WHERE Monster_ID = ?",
             arrayOf(petID.toString())
         )
-        var monster = Monster("", "", 0f, 0f, 0, "", 0)
+        var monster = Monster("", "", 0f, 0f, 0, "", 0,"")
 
         if (cursor.moveToFirst()) {
             monster = Monster(
@@ -120,7 +124,8 @@ class DatabaseHelper (context: Context): SQLiteOpenHelper(
                 cursor.getFloat(cursor.getColumnIndexOrThrow("Weight")),
                 cursor.getInt(cursor.getColumnIndexOrThrow("Intellect")),
                 cursor.getString(cursor.getColumnIndexOrThrow("Hobby")),
-                cursor.getInt(cursor.getColumnIndexOrThrow("Rarity"))
+                cursor.getInt(cursor.getColumnIndexOrThrow("Rarity")),
+                cursor.getString(cursor.getColumnIndexOrThrow("Image"))
             )
         }
         cursor.close()
@@ -144,7 +149,10 @@ class DatabaseHelper (context: Context): SQLiteOpenHelper(
     fun getPetMonsters(ownerID: Int): ArrayList<Monster> {
         val db = readableDatabase
         val cursor = db.rawQuery(
-            "SELECT Name, Type, Size, Weight, Intellect, Hobby, Rarity FROM PetMonsters WHERE Owner_ID = ?",
+            "SELECT PetMonsters.Name, PetMonsters.Type, PetMonsters.Size, PetMonsters.Weight, " +
+                    "PetMonsters.Intellect, PetMonsters.Hobby, PetMonsters.Rarity, MonsterDefinitions.Image " +
+                    " FROM PetMonsters JOIN MonsterDefinitions ON PetMonsters.Type = MonsterDefinitions.Type_Name " +
+                    " WHERE Owner_ID = ?",
             arrayOf(ownerID.toString())
         )
         val monsters = ArrayList<Monster>()
@@ -157,7 +165,8 @@ class DatabaseHelper (context: Context): SQLiteOpenHelper(
                 cursor.getFloat(cursor.getColumnIndexOrThrow("Weight")),
                 cursor.getInt(cursor.getColumnIndexOrThrow("Intellect")),
                 cursor.getString(cursor.getColumnIndexOrThrow("Hobby")),
-                cursor.getInt(cursor.getColumnIndexOrThrow("Rarity"))
+                cursor.getInt(cursor.getColumnIndexOrThrow("Rarity")),
+                cursor.getString(cursor.getColumnIndexOrThrow("image"))
             )
             monsters.add(monster)
         }

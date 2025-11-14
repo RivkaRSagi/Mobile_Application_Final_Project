@@ -11,7 +11,8 @@ class Monster (
     var weight: Float,
     var intellect: Int,
     var hobby: String,
-    var rarity: Int
+    var rarity: Int,
+    var image: String
 ){
 
     companion object {
@@ -19,7 +20,7 @@ class Monster (
         fun createRandomMonster(context: Context): Monster {
             val monsterTypes = context.resources.getStringArray(R.array.monsters)
             val hobbies = context.resources.getStringArray(R.array.hobbies)
-            val rarityType = context.resources.getStringArray(R.array.rarity)
+            val images = context.resources.getStringArray(R.array.images)
 
             val random = Random()
             val randomType = random.nextInt(25)
@@ -47,7 +48,8 @@ class Monster (
                 (1..100).random().toFloat(),
                 (1..10).random(),
                 hobbies[randomHobby],
-                rarity
+                rarity,
+                images[randomType]
             )
 
             return newMonster
