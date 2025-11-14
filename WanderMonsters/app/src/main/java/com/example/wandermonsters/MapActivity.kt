@@ -23,7 +23,10 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.LocationRequest
 import android.location.*
+import android.os.Handler
 import android.os.Looper
+import android.os.SystemClock
+import android.view.animation.LinearInterpolator
 import androidx.annotation.RequiresPermission
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
@@ -167,7 +170,8 @@ class MapActivity : AppCompatActivity(),  OnMapReadyCallback{
                 super.onLocationResult(locationResult)
                 for (location in locationResult.locations) {
                     val latLng = LatLng(location.latitude, location.longitude)
-                    mainMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
+                    mainMap.animateCamera(CameraUpdateFactory.newLatLng(latLng), 1000, null)
+
 
                     if (circle == null) {
                         circle = mainMap.addCircle(
@@ -178,9 +182,6 @@ class MapActivity : AppCompatActivity(),  OnMapReadyCallback{
                                 .fillColor(getColor(R.color.mapCircle))
                                 .strokeWidth(2f)
                         )
-                    } else {
-                        circle?.center = latLng
-                        circle?.radius = maxDistance
                     }
 
                     if(userMarker == null){
@@ -197,7 +198,7 @@ class MapActivity : AppCompatActivity(),  OnMapReadyCallback{
                         )
                     }
 
-                    userMarker!!.position = latLng
+                    animateMarker(userMarker!!, latLng)
 
                     if (monsterEvents.size < 5) {
                         val eventLocation = generateEventIcons(latLng, maxDistance - 6)
@@ -283,6 +284,31 @@ class MapActivity : AppCompatActivity(),  OnMapReadyCallback{
         val canvas = Canvas(bitmap)
         vectorDrawable.draw(canvas)
         return BitmapDescriptorFactory.fromBitmap(bitmap)
+    }
+
+    fun animateMarker(marker: Marker, toPosition: LatLng) {
+        val handler = Handler(Looper.getMainLooper())
+        val start = SystemClock.uptimeMillis()
+        val duration = 1000L
+        val startLatLng = marker.position
+
+        val interpolator = LinearInterpolator()
+
+        handler.post(object : Runnable {
+            override fun run() {
+                val elapsed = SystemClock.uptimeMillis() - start
+                val t = (elapsed.toFloat() / duration).coerceAtMost(1f)
+                val lat = (toPosition.latitude - startLatLng.latitude) * t + startLatLng.latitude
+                val lng = (toPosition.longitude - startLatLng.longitude) * t + startLatLng.longitude
+                val latLng = LatLng(lat, lng)
+                marker.position = latLng
+                circle!!.center = latLng
+
+                if (t < 1f) {
+                    handler.postDelayed(this, 16)
+                }
+            }
+        })
     }
 
 }
