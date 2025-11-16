@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/monsterCard"
+    android:layout_width="400dp"
+    android:layout_height="700dp"
+    android:padding="20dp"
+    tools:context=".MonsterCard"
+    android:background="@drawable/blue_back">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/color_back">
+
+        <TextView
+            android:id="@+id/monsterType"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:fontFamily="@font/aclonica"
+            android:gravity="center"
+            android:text="Monster Name"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            android:background="#082329"/>
+
+        <ImageView
+            android:id="@+id/monsterImage"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="100dp"
+            android:background="@drawable/monstercardbox"/>
+
+        <TextView
+            android:id="@+id/petName"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="320dp"
+            android:text="Pet Name"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:textSize="22sp"
+            android:clickable="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="Size: "
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_marginTop="400dp"
+            android:layout_marginStart="110dp"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/size"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="180"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_marginTop="400dp"
+            android:layout_marginStart="165dp"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="cm"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_marginTop="400dp"
+            android:layout_marginStart="215dp"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="Intellect: "
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_marginTop="450dp"
+            android:layout_marginStart="120dp"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/intellect"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="10"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_marginTop="450dp"
+            android:layout_marginStart="205dp"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="Weight: "
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_marginTop="500dp"
+            android:layout_marginStart="110dp"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/weight"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="120"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_marginTop="500dp"
+            android:layout_marginStart="185dp"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="lb"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_marginTop="500dp"
+            android:layout_marginStart="230dp"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="Hobby: "
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_marginTop="550dp"
+            android:layout_marginStart="110dp"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/hobby"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="Skating"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_marginTop="550dp"
+            android:layout_marginStart="190dp"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="600dp"
+            />
+
+
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

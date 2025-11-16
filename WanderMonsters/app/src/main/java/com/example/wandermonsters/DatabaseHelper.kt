@@ -69,6 +69,13 @@ class DatabaseHelper (context: Context): SQLiteOpenHelper(
         db.execSQL("DELETE FROM Accounts WHERE id = ?", arrayOf(ID))
     }
 
+    // function to delete monster definitions table
+    fun deleteMonsters(){
+        val db= writableDatabase
+        db.delete("MonsterDefinitions",null,null)
+        db.close()
+    }
+
     //function to retrieve owner id based on username and password
     fun getOwnerID(username: String, password: String): Int {
         val db = readableDatabase
@@ -146,7 +153,7 @@ class DatabaseHelper (context: Context): SQLiteOpenHelper(
     }
 
     //function to get a list of all pet monsters
-    fun getPetMonsters(ownerID: Int): ArrayList<Monster> {
+    fun getPetMonsters(ownerID: Int, context: Context): List<ListValues.Monster_card> {
         val db = readableDatabase
         val cursor = db.rawQuery(
             "SELECT PetMonsters.Name, PetMonsters.Type, PetMonsters.Size, PetMonsters.Weight, " +
@@ -155,20 +162,31 @@ class DatabaseHelper (context: Context): SQLiteOpenHelper(
                     " WHERE Owner_ID = ?",
             arrayOf(ownerID.toString())
         )
-        val monsters = ArrayList<Monster>()
 
-        while (cursor.moveToNext()) {
-            val monster = Monster(
-                cursor.getString(cursor.getColumnIndexOrThrow("Type")),
-                cursor.getString(cursor.getColumnIndexOrThrow("Name")),
-                cursor.getFloat(cursor.getColumnIndexOrThrow("Size")),
-                cursor.getFloat(cursor.getColumnIndexOrThrow("Weight")),
-                cursor.getInt(cursor.getColumnIndexOrThrow("Intellect")),
-                cursor.getString(cursor.getColumnIndexOrThrow("Hobby")),
-                cursor.getInt(cursor.getColumnIndexOrThrow("Rarity")),
-                cursor.getString(cursor.getColumnIndexOrThrow("image"))
-            )
-            monsters.add(monster)
+        val monsters = mutableListOf<ListValues.Monster_card>()
+//        val monsters = ArrayList<Monster>()
+//        val myPet = ArrayList<Monster>()
+
+        if(cursor.moveToFirst()) {
+            do {
+                val type = cursor.getString(cursor.getColumnIndexOrThrow("Type"))
+                val petname = cursor.getString(cursor.getColumnIndexOrThrow("Name"))
+                val size = cursor.getFloat(cursor.getColumnIndexOrThrow("Size"))
+                val weight = cursor.getFloat(cursor.getColumnIndexOrThrow("Weight"))
+                val intellect = cursor.getInt(cursor.getColumnIndexOrThrow("Intellect"))
+                val hobby = cursor.getString(cursor.getColumnIndexOrThrow("Hobby"))
+                val rarity = cursor.getInt(cursor.getColumnIndexOrThrow("Rarity"))
+                val image = cursor.getString(cursor.getColumnIndexOrThrow("Image"))
+
+                val imageResource = image.substringBefore(".")
+                val imageResId = context.resources.getIdentifier(imageResource, "drawable", context.packageName)
+
+
+                val monster = ListValues.Monster_card(type,imageResId,petname,size,weight,intellect,hobby)
+                monsters.add(monster)
+            }while (cursor.moveToNext())
+
+//            monsters.add(monster)
         }
         cursor.close()
         return monsters
@@ -199,8 +217,27 @@ class DatabaseHelper (context: Context): SQLiteOpenHelper(
         db.execSQL("UPDATE MonsterDefinitions SET Discovered = 0")
     }
 
-    //is this actually needed?
-    //function to get list of all monster types
+//    fun emptyTables(){
+//        val db = writableDatabase
+//        db.execSQL("DELETE FROM Accounts")
+//        db.execSQL("DELETE FROM PetMonsters")
+//        db.execSQL("DELETE FROM MonsterDefinitions")
+//    }
+
+    fun getMonsterCount(): Int {
+        val db = readableDatabase
+        val cursor = db.rawQuery("SELECT COUNT(*) FROM MonsterDefinitions", null)
+        var count = 0
+
+        if (cursor.moveToFirst()) {
+            count = cursor.getInt(0)
+        }
+
+        cursor.close()
+        db.close()
+        return count
+    }
+
 
     //how to add the images to the monsters? currently saved in the drawables
     //function to initialize monster types

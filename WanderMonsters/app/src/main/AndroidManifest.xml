@@ -15,12 +15,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WanderMonsters">
         <activity
+            android:name=".MonsterCard"
+            android:exported="false" />
+        <activity
             android:name=".LoginPage"
             android:exported="false" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDcAsK77NIawx84Fhmyo7HX5QYng2Nx_Ak" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
 
         <activity
             android:name=".MapActivity"

@@ -1,18 +1,20 @@
 package com.example.wandermonsters
 
+import android.app.ActionBar
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 
 class MyCollection_listAdapter (
     private val context: Context,
-    private val listItem: List<ListValues.MyCollection_listItem>
-) : ArrayAdapter<ListValues.MyCollection_listItem>(context, R.layout.my_collection_list_item,
-    listItem){
+    private val listItem: List<ListValues.Monster_card>
+) : ArrayAdapter<ListValues.Monster_card>(context,0, listItem){
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val view = convertView ?: LayoutInflater.from(context).inflate(R.layout.my_collection_list_item, parent, false)
@@ -21,11 +23,41 @@ class MyCollection_listAdapter (
         val textMonsterName = view.findViewById<TextView>(R.id.monsterName)
 
         val item = listItem[position]
-        image.setImageResource(item.monsterImage)
-        textPetName.text = item.petName
-        textMonsterName.text = item.monsterType
+        image.setImageResource(item.monster_picture)
+        textPetName.text = item.pet_name
+        textMonsterName.text = item.monster_type
+
+        view.setOnClickListener {
+            showMonsterCard(item)
+
+        }
 
         return view
+    }
+
+    fun showMonsterCard(item: ListValues.Monster_card){
+        val view = LayoutInflater.from(context).inflate(R.layout.activity_monster_card, null)
+        val monsterType= view.findViewById<TextView>(R.id.monsterType)
+        val monsterImage = view.findViewById<ImageView>(R.id.monsterImage)
+        val petName = view.findViewById<TextView>(R.id.petName)
+        val size = view.findViewById<TextView>(R.id.size)
+        val intellect = view.findViewById<TextView>(R.id.intellect)
+        val weight = view.findViewById<TextView>(R.id.weight)
+        val hobby = view.findViewById<TextView>(R.id.hobby)
+
+        monsterType.text=item.monster_type
+        monsterImage.setImageResource(item.monster_picture)
+        petName.text=item.pet_name
+        size.text=item.size.toString()
+        intellect.text=item.intellect.toString()
+        weight.text=item.weight.toString()
+        hobby.text=item.hobby
+
+        AlertDialog.Builder(context)
+            .setView(view)
+            .show()
+            .setCancelable(true)
+
     }
 
 

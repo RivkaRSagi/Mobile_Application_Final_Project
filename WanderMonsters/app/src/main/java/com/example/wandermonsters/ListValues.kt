@@ -2,8 +2,9 @@ package com.example.wandermonsters
 
 class ListValues {
 
-    data class MyCollection_listItem(val petName: String, val monsterType: String, val monsterImage: Int)
+    data class Dictionary_table(val monster_image: Int, val monster_Type: String, val rarity: String)
 
-    data class Dictionary_table(val monster_image: Int, val monster_name: String, val rarity: String)
+    data class Monster_card(val monster_type: String, val monster_picture: Int, val pet_name: String, val size: Float,
+        val weight: Float, val intellect: Int, val hobby: String)
 
 }

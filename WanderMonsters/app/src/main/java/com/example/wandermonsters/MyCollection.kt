@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
+import com.example.wandermonsters.ListValues
 
 //// TODO: Rename parameter arguments, choose names that match
 //// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -18,6 +19,8 @@ import android.widget.ListView
 // * create an instance of this fragment.
 // */
 class MyCollection : Fragment() {
+    private lateinit var dbHelper: DatabaseHelper
+    private lateinit var monster : List<ListValues.Monster_card>
 //    // TODO: Rename and change types of parameters
 //    private var param1: String? = null
 //    private var param2: String? = null
@@ -40,12 +43,18 @@ class MyCollection : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val listView = view.findViewById<ListView>(R.id.MyList)
-        val items = listOf(
-            ListValues.MyCollection_listItem("Joe", "SnailBoo", R.drawable.snailboo),
-            ListValues.MyCollection_listItem("Bob", "GreyLock", R.drawable.graylock)
-        )
+        dbHelper = DatabaseHelper(requireContext())
+        val currentUserID = dbHelper.getOwnerID("testUser", "123")
+        val mon_item = dbHelper.getPetMonsters(currentUserID, requireContext())
+        monster = mon_item
 
-        val adapter = MyCollection_listAdapter(requireContext(), items)
+
+//        val items = listOf(
+//            ListValues.Monster_card("SnailBoo",R.drawable.snailboo,"Joe", 3.31f, 23f,9, "Skating"),
+//            ListValues.Monster_card("GreyLock", R.drawable.graylock, "Bob", 22.1f, 2220f, 2, "Running")
+//        )
+
+        val adapter = MyCollection_listAdapter(requireContext(), monster)
         listView.adapter = adapter
     }
 

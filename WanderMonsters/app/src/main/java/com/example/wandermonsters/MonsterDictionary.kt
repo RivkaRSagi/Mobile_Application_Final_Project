@@ -78,7 +78,7 @@ class MonsterDictionary : Fragment() {
                     }
 
                     val textView = TextView(context).apply {
-                        setText(cellData.monster_name)
+                        setText(cellData.monster_Type)
                         gravity = Gravity.CENTER
                         textSize = 18f
                         layoutParams = LinearLayout.LayoutParams(
