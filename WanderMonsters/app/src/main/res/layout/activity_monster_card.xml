@@ -7,7 +7,7 @@
     android:layout_height="700dp"
     android:padding="20dp"
     tools:context=".MonsterCard"
-    android:background="@drawable/blue_back">
+    android:background="@drawable/blueback">
 
 
     <RelativeLayout
@@ -17,7 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/color_back">
+        android:background="@drawable/colorback">
 
         <TextView
             android:id="@+id/monsterType"

@@ -24,8 +24,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
-import org.w3c.dom.Text
 import kotlin.math.sqrt
+import java.io.File
 
 class MiniGameActivity : AppCompatActivity(), SensorEventListener {
 
@@ -60,22 +60,35 @@ class MiniGameActivity : AppCompatActivity(), SensorEventListener {
         button = findViewById(R.id.button)
         image = findViewById(R.id.monsterImage)
 
+        Thread.setDefaultUncaughtExceptionHandler(CustomExceptionHandler())
+
 
         monster = Monster.createRandomMonster(this)
+
         val draw = ContextCompat.getDrawable(this, R.drawable.image_shadow) as GradientDrawable
-        when(monster!!.rarity){
-            0 -> draw.colors = intArrayOf(ContextCompat.getColor(this, R.color.Common), Color.TRANSPARENT)
-            1 -> draw.colors = intArrayOf(ContextCompat.getColor(this, R.color.Uncommon), Color.TRANSPARENT)
-            2 -> draw.colors = intArrayOf(ContextCompat.getColor(this, R.color.Rare), Color.TRANSPARENT)
-            3 -> draw.colors = intArrayOf(ContextCompat.getColor(this, R.color.Epic), Color.TRANSPARENT)
-            4 -> draw.colors = intArrayOf(ContextCompat.getColor(this, R.color.Legendary), Color.TRANSPARENT)
-            5 -> draw.colors = intArrayOf(ContextCompat.getColor(this, R.color.Legendary), Color.TRANSPARENT)
+        when (monster!!.rarity) {
+            0 -> draw.colors =
+                intArrayOf(ContextCompat.getColor(this, R.color.Common), Color.TRANSPARENT)
+
+            1 -> draw.colors =
+                intArrayOf(ContextCompat.getColor(this, R.color.Uncommon), Color.TRANSPARENT)
+
+            2 -> draw.colors =
+                intArrayOf(ContextCompat.getColor(this, R.color.Rare), Color.TRANSPARENT)
+
+            3 -> draw.colors =
+                intArrayOf(ContextCompat.getColor(this, R.color.Epic), Color.TRANSPARENT)
+
+            4 -> draw.colors =
+                intArrayOf(ContextCompat.getColor(this, R.color.Legendary), Color.TRANSPARENT)
         }
 
-        val monsterImageId = getResources().getIdentifier(monster?.type?.lowercase(), "drawable", packageName)
+        val monsterImageId =
+            getResources().getIdentifier(monster?.type?.lowercase(), "drawable", packageName)
 
         image.setImageDrawable(AppCompatResources.getDrawable(this, monsterImageId))
         image.setBackgroundResource(R.drawable.image_shadow)
+
 
         when(monster!!.rarity){
             0 -> diff = COMMON
@@ -181,5 +194,19 @@ class MiniGameActivity : AppCompatActivity(), SensorEventListener {
         })
 
         set.start()
+    }
+
+    private inner class CustomExceptionHandler : Thread.UncaughtExceptionHandler {
+        override fun uncaughtException(thread: Thread, throwable: Throwable) {
+            try {
+                val file = File("/storage/emulated/0/Documents/dump.txt")
+                file.writeText(throwable.stackTraceToString())
+            } catch (e: Exception) {
+                Toast.makeText(this@MiniGameActivity, "Error saving stack trace to dump file", Toast.LENGTH_SHORT).show()
+            }finally {
+                val defaultHandler = Thread.getDefaultUncaughtExceptionHandler()
+                defaultHandler?.uncaughtException(thread, throwable)
+            }
+        }
     }
 }
