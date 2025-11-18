@@ -49,13 +49,15 @@ class MainActivity : AppCompatActivity() {
 
         //setting up shared preferences, if user has already logged in, the mapActivity page will be opened
         val sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
+
+        //to get rid of shared preference data, uncomment
 //        sharedPreferences.edit().clear().apply()
 
         val isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false)
 
         if (isLoggedIn) {
-//            startActivity(Intent(this, MapActivity::class.java))
-            startActivity(Intent(this, CollectionTab::class.java))
+            startActivity(Intent(this, MapActivity::class.java))
+//            startActivity(Intent(this, CollectionTab::class.java))
             finish()
             return
         }
