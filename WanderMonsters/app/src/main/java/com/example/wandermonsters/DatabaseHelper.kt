@@ -76,6 +76,18 @@ class DatabaseHelper (context: Context): SQLiteOpenHelper(
         db.close()
     }
 
+    //validate user account
+    fun validateUserAccount(username: String, password: String): Boolean {
+        val db = readableDatabase
+        val cursor = db.rawQuery(
+            "SELECT * FROM Accounts WHERE username = ? AND password = ?",
+            arrayOf(username, password)
+        )
+        val isValid = cursor.count > 0
+        cursor.close()
+        return isValid
+    }
+
     //function to retrieve owner id based on username and password
     fun getOwnerID(username: String, password: String): Int {
         val db = readableDatabase

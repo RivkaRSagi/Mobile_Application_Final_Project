@@ -15,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WanderMonsters">
         <activity
+            android:name=".SignUpPage"
+            android:exported="false" />
+        <activity
             android:name=".MonsterCard"
             android:exported="false" />
         <activity

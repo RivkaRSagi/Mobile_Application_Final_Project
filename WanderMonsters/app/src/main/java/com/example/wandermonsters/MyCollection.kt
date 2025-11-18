@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
 import com.example.wandermonsters.ListValues
+import android.content.Context.MODE_PRIVATE
 
 //// TODO: Rename parameter arguments, choose names that match
 //// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -44,7 +45,8 @@ class MyCollection : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val listView = view.findViewById<ListView>(R.id.MyList)
         dbHelper = DatabaseHelper(requireContext())
-        val currentUserID = dbHelper.getOwnerID("testUser", "123")
+        val sharedPreferences= requireActivity().getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
+        val currentUserID = sharedPreferences.getInt("userID", -1)
         val mon_item = dbHelper.getPetMonsters(currentUserID, requireContext())
         monster = mon_item
 
@@ -56,6 +58,7 @@ class MyCollection : Fragment() {
 
         val adapter = MyCollection_listAdapter(requireContext(), monster)
         listView.adapter = adapter
+        adapter.notifyDataSetChanged()
     }
 
 //    companion object {
