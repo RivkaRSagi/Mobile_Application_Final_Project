@@ -43,7 +43,7 @@ import kotlin.random.Random
 class MapActivity : AppCompatActivity(),  OnMapReadyCallback{
 
     private lateinit var mainMap: GoogleMap
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private var fusedLocationClient: FusedLocationProviderClient? = null
     private lateinit var locationRequest: LocationRequest
     private lateinit var locationCallback: LocationCallback
     private var circle: Circle? = null
@@ -77,7 +77,7 @@ class MapActivity : AppCompatActivity(),  OnMapReadyCallback{
     override fun onPause() {
         super.onPause()
 
-        fusedLocationClient.removeLocationUpdates(locationCallback)
+        fusedLocationClient?.removeLocationUpdates(locationCallback)
     }
 
     override fun onResume() {
@@ -94,46 +94,49 @@ class MapActivity : AppCompatActivity(),  OnMapReadyCallback{
         mainMap = p0
         mainMap.isBuildingsEnabled = false
 
-        startLocationUpdates()
-        fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-            if (location != null) {
-                val latLng = LatLng(location.latitude, location.longitude)
-                mainMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel))
-                userMarker = mainMap.addMarker(
-                    MarkerOptions()
-                        .position(latLng)
-                        .title("user_marker")
-                        .icon(
-                            getBitmapFromVector(
-                                applicationContext,
-                                R.drawable.user_location
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
+
+            startLocationUpdates()
+            fusedLocationClient!!.lastLocation.addOnSuccessListener { location ->
+                if (location != null) {
+                    val latLng = LatLng(location.latitude, location.longitude)
+                    mainMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel))
+                    userMarker = mainMap.addMarker(
+                        MarkerOptions()
+                            .position(latLng)
+                            .title("user_marker")
+                            .icon(
+                                getBitmapFromVector(
+                                    applicationContext,
+                                    R.drawable.user_location
+                                )
                             )
-                        )
-                )
-                circle = mainMap.addCircle(
-                    CircleOptions()
-                        .center(latLng)
-                        .radius(maxDistance)
-                        .strokeColor(getColor(R.color.mapStroke))
-                        .fillColor(getColor(R.color.mapCircle))
-                        .strokeWidth(2f)
-                )
+                    )
+                    circle = mainMap.addCircle(
+                        CircleOptions()
+                            .center(latLng)
+                            .radius(maxDistance)
+                            .strokeColor(getColor(R.color.mapStroke))
+                            .fillColor(getColor(R.color.mapCircle))
+                            .strokeWidth(2f)
+                    )
+                }
             }
-        }
 
-        mainMap.setOnMarkerClickListener { marker ->
-            if (marker.title == "monster_event") {
-                monsterEvents.remove(marker)
-                val intent = Intent(this@MapActivity, MiniGameActivity::class.java)
+            mainMap.setOnMarkerClickListener { marker ->
+                if (marker.title == "monster_event") {
+                    monsterEvents.remove(marker)
+                    val intent = Intent(this@MapActivity, MiniGameActivity::class.java)
 
-                marker.remove()
-                startActivity(intent)
+                    marker.remove()
+                    startActivity(intent)
+                }
+                true
             }
-            true
         }
     }
 
-    @SuppressLint("MissingPermission")
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -155,7 +158,6 @@ class MapActivity : AppCompatActivity(),  OnMapReadyCallback{
         }
     }
 
-
     @RequiresPermission(allOf = [Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION])
     private fun startLocationUpdates(){
         locationRequest = LocationRequest.create().apply {
@@ -170,7 +172,7 @@ class MapActivity : AppCompatActivity(),  OnMapReadyCallback{
                 super.onLocationResult(locationResult)
                 for (location in locationResult.locations) {
                     val latLng = LatLng(location.latitude, location.longitude)
-                    mainMap.animateCamera(CameraUpdateFactory.newLatLng(latLng), 1000, null)
+                    mainMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel), 1000, null)
 
 
                     if (circle == null) {
@@ -234,7 +236,7 @@ class MapActivity : AppCompatActivity(),  OnMapReadyCallback{
 
         }
 
-        fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
+        fusedLocationClient!!.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
     }
 
 //    fun animateMarker(marker: Circle, toPosition: LatLng) {
