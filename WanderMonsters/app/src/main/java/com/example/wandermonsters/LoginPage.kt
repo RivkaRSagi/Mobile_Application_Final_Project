@@ -54,7 +54,8 @@ class LoginPage : AppCompatActivity() {
                         .putInt("userID", currentUserID)
                         .apply()
 
-                    startActivity(Intent(this, CollectionTab::class.java))
+//                    startActivity(Intent(this, CollectionTab::class.java))
+                    startActivity(Intent(this, MapActivity::class.java))
                     finish()
                 }else{
                     Toast.makeText(this, "User ID not found", Toast.LENGTH_SHORT).show()
