@@ -93,23 +93,28 @@ class MiniGameActivity : AppCompatActivity(), SensorEventListener {
         when (monster!!.rarity) {
             0 -> {draw.colors =
                 intArrayOf(ContextCompat.getColor(this, R.color.Common), Color.TRANSPARENT)
-                decay = 2f}
+                decay = 2f
+                diff = COMMON}
 
             1 -> {draw.colors =
                 intArrayOf(ContextCompat.getColor(this, R.color.Uncommon), Color.TRANSPARENT)
-                decay = 3f}
+                decay = 3f
+                diff = UNCOMMON}
 
             2 -> {draw.colors =
                 intArrayOf(ContextCompat.getColor(this, R.color.Rare), Color.TRANSPARENT)
-                decay = 5f}
+                decay = 5f
+                diff = RARE}
 
             3 -> {draw.colors =
                 intArrayOf(ContextCompat.getColor(this, R.color.Epic), Color.TRANSPARENT)
-                decay = 7f}
+                decay = 7f
+                diff = EPIC}
 
             4 -> {draw.colors =
                 intArrayOf(ContextCompat.getColor(this, R.color.Legendary), Color.TRANSPARENT)
-                decay = 9f}
+                decay = 9f
+                diff = LEGENDARY}
         }
 
         val monsterImageId =
@@ -117,15 +122,6 @@ class MiniGameActivity : AppCompatActivity(), SensorEventListener {
 
         image.setImageDrawable(AppCompatResources.getDrawable(this, monsterImageId))
         image.setBackgroundResource(R.drawable.image_shadow)
-
-
-        when(monster!!.rarity){
-            0 -> diff = COMMON
-            1 -> diff = UNCOMMON
-            2 -> diff = RARE
-            3 -> diff = EPIC
-            4 -> diff = LEGENDARY
-        }
 
         button.setOnClickListener {
             finish()
