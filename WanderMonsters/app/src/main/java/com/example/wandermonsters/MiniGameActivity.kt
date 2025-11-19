@@ -45,10 +45,34 @@ class MiniGameActivity : AppCompatActivity(), SensorEventListener {
     private lateinit var button: Button
     private var progress = 0f
     private var diff = 0f
+    private var decay = 0f
     private var hasFinished = false
     private val SHAKE_THRESHOLD = 6.0f
     private val handler = Handler(Looper.getMainLooper())
     private var monster: Monster? = null
+    private var lastMovementTime = System.currentTimeMillis()
+    private val decayIntervalMs = 100L
+    private val decayRunnable = object : Runnable {
+        override fun run() {
+            if (hasFinished) return
+
+            val decayThisTick = decay * (decayIntervalMs / 1000f) // percent to remove this tick
+            val now = System.currentTimeMillis()
+            val idleMs = now - lastMovementTime
+
+            // optional: only start decaying after short idle
+            val idleDelayMs = 300L
+            if (idleMs >= idleDelayMs) {
+                progress = (progress - decayThisTick).coerceAtLeast(0f)
+                // update immediately so small changes are visible
+                progressBar.max = 100
+                progressBar.progress = progress.toInt()
+            }
+
+            handler.postDelayed(this, decayIntervalMs)
+        }
+    }
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,20 +91,25 @@ class MiniGameActivity : AppCompatActivity(), SensorEventListener {
 
         val draw = ContextCompat.getDrawable(this, R.drawable.image_shadow) as GradientDrawable
         when (monster!!.rarity) {
-            0 -> draw.colors =
+            0 -> {draw.colors =
                 intArrayOf(ContextCompat.getColor(this, R.color.Common), Color.TRANSPARENT)
+                decay = 2f}
 
-            1 -> draw.colors =
+            1 -> {draw.colors =
                 intArrayOf(ContextCompat.getColor(this, R.color.Uncommon), Color.TRANSPARENT)
+                decay = 3f}
 
-            2 -> draw.colors =
+            2 -> {draw.colors =
                 intArrayOf(ContextCompat.getColor(this, R.color.Rare), Color.TRANSPARENT)
+                decay = 5f}
 
-            3 -> draw.colors =
+            3 -> {draw.colors =
                 intArrayOf(ContextCompat.getColor(this, R.color.Epic), Color.TRANSPARENT)
+                decay = 7f}
 
-            4 -> draw.colors =
+            4 -> {draw.colors =
                 intArrayOf(ContextCompat.getColor(this, R.color.Legendary), Color.TRANSPARENT)
+                decay = 9f}
         }
 
         val monsterImageId =
@@ -111,11 +140,15 @@ class MiniGameActivity : AppCompatActivity(), SensorEventListener {
         accelerometer?.also {
             sensorManager.registerListener(this, it, SensorManager.SENSOR_DELAY_GAME)
         }
+
+        handler.removeCallbacks(decayRunnable)
+        handler.postDelayed(decayRunnable, decayIntervalMs)
     }
 
     override fun onPause() {
         super.onPause()
         sensorManager.unregisterListener(this)
+        handler.removeCallbacks(decayRunnable)
     }
 
     override fun onSensorChanged(event: SensorEvent?) {
@@ -126,12 +159,15 @@ class MiniGameActivity : AppCompatActivity(), SensorEventListener {
         val totalAcceleration = sqrt(x + y + z)
 
         if (totalAcceleration > SHAKE_THRESHOLD) {
+            lastMovementTime = System.currentTimeMillis()
             val increment = diff * (totalAcceleration / SHAKE_THRESHOLD)
             progress = (progress + increment).coerceAtMost(100f)
             updateProgressBar(progress)
 
             if (progress >= 100f && !hasFinished) {
                 hasFinished = true
+                handler.removeCallbacks(decayRunnable)
+
                 val layout = findViewById<View>(R.id.container)
                 layout.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
 
