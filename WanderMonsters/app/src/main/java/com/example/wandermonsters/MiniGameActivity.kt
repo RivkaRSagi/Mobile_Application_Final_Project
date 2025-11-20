@@ -26,6 +26,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import kotlin.math.sqrt
 import java.io.File
+import android.media.MediaPlayer
 
 class MiniGameActivity : AppCompatActivity(), SensorEventListener {
 
@@ -51,6 +52,7 @@ class MiniGameActivity : AppCompatActivity(), SensorEventListener {
     private val handler = Handler(Looper.getMainLooper())
     private var monster: Monster? = null
     private var lastMovementTime = System.currentTimeMillis()
+    private var mediaPlayer: MediaPlayer? = null
     private val decayIntervalMs = 100L
     private val decayRunnable = object : Runnable {
         override fun run() {
@@ -145,11 +147,26 @@ class MiniGameActivity : AppCompatActivity(), SensorEventListener {
         super.onPause()
         sensorManager.unregisterListener(this)
         handler.removeCallbacks(decayRunnable)
+
+        mediaPlayer?.let {
+            if (it.isPlaying) {
+                it.stop()
+                it.release()
+                mediaPlayer = null
+            }
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mediaPlayer?.let {
+            it.release()
+            mediaPlayer = null
+        }
     }
 
     override fun onSensorChanged(event: SensorEvent?) {
         if (event?.sensor?.type != Sensor.TYPE_ACCELEROMETER && !hasFinished) return
-
 
         val (x, y, z) = event!!.values
         val totalAcceleration = sqrt(x + y + z)
@@ -177,7 +194,7 @@ class MiniGameActivity : AppCompatActivity(), SensorEventListener {
                     //TODO store monster object. and navigate to collection
                     finish()
                 }
-
+                playCaptureSound()
                 startPulseAndWobble(image)
 
             }
@@ -226,6 +243,20 @@ class MiniGameActivity : AppCompatActivity(), SensorEventListener {
         })
 
         set.start()
+    }
+
+    private fun playCaptureSound() {
+        if (mediaPlayer == null) {
+            mediaPlayer = MediaPlayer.create(this, R.raw.reward_song)
+        }
+
+        mediaPlayer?.start()
+
+        mediaPlayer?.setOnCompletionListener {
+            // Release the MediaPlayer once the song finishes
+            mediaPlayer?.release()
+            mediaPlayer = null
+        }
     }
 
     private inner class CustomExceptionHandler : Thread.UncaughtExceptionHandler {
