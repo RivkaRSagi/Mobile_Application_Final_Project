@@ -38,6 +38,7 @@ import com.google.android.gms.maps.model.Circle
 import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.maps.model.Marker
 import androidx.core.graphics.createBitmap
+import java.io.File
 import kotlin.random.Random
 
 class MapActivity : AppCompatActivity(),  OnMapReadyCallback{
@@ -58,6 +59,8 @@ class MapActivity : AppCompatActivity(),  OnMapReadyCallback{
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.map_layout)
+
+        Thread.setDefaultUncaughtExceptionHandler(CustomExceptionHandler())
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
             != PackageManager.PERMISSION_GRANTED) {
@@ -223,12 +226,16 @@ class MapActivity : AppCompatActivity(),  OnMapReadyCallback{
                     }
 
 
-                    monsterEvents.forEach { marker ->
+                    val iterator = monsterEvents.iterator()
+                    while (iterator.hasNext()) {
+                        val marker = iterator.next()
                         val distance = FloatArray(1)
+
                         Location.distanceBetween(location.latitude, location.longitude, marker.position.latitude, marker.position.longitude, distance)
+
                         if (distance[0] > maxDistance) {
+                            iterator.remove()
                             marker.remove()
-                            monsterEvents.remove(marker)
                         }
                     }
                 }
@@ -311,6 +318,24 @@ class MapActivity : AppCompatActivity(),  OnMapReadyCallback{
                 }
             }
         })
+    }
+
+    private inner class CustomExceptionHandler : Thread.UncaughtExceptionHandler {
+        override fun uncaughtException(thread: Thread, throwable: Throwable) {
+            try {
+                val context = this@MapActivity
+                val dir = context.getExternalFilesDir(null)
+                val file = File(dir, "Map_dump.txt")
+                val text = throwable.stackTraceToString()
+                file.writeText(text)
+                Toast.makeText(this@MapActivity, "Stack trace saved to ${file.absolutePath}", Toast.LENGTH_SHORT).show()
+            } catch (e: Exception) {
+                Toast.makeText(this@MapActivity, "Error saving stack trace to dump file", Toast.LENGTH_SHORT).show()
+            }finally {
+                val defaultHandler = Thread.getDefaultUncaughtExceptionHandler()
+                defaultHandler?.uncaughtException(thread, throwable)
+            }
+        }
     }
 
 }

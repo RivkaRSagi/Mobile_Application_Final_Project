@@ -262,8 +262,12 @@ class MiniGameActivity : AppCompatActivity(), SensorEventListener {
     private inner class CustomExceptionHandler : Thread.UncaughtExceptionHandler {
         override fun uncaughtException(thread: Thread, throwable: Throwable) {
             try {
-                val file = File("/storage/emulated/0/Documents/dump.txt")
-                file.writeText(throwable.stackTraceToString())
+                val context = this@MiniGameActivity
+                val dir = context.getExternalFilesDir(null)
+                val file = File(dir, "Game_dump.txt")
+                val text = throwable.stackTraceToString()
+                file.writeText(text)
+                Toast.makeText(this@MiniGameActivity, "Stack trace saved to ${file.absolutePath}", Toast.LENGTH_SHORT).show()
             } catch (e: Exception) {
                 Toast.makeText(this@MiniGameActivity, "Error saving stack trace to dump file", Toast.LENGTH_SHORT).show()
             }finally {
