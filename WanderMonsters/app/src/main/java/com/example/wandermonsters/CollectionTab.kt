@@ -1,6 +1,8 @@
 package com.example.wandermonsters
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageButton
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -19,6 +21,24 @@ class CollectionTab : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        //nav bar
+        val mapButton = findViewById<ImageButton>(R.id.mapButton)
+        val monsterButton = findViewById<ImageButton>(R.id.monsterButton)
+        val accountButton = findViewById<ImageButton>(R.id.accountButton)
+
+        mapButton.setOnClickListener {
+            val intent = Intent(this, MapActivity::class.java)
+            startActivity(intent)
+        }
+        monsterButton.setOnClickListener {
+            val intent = Intent(this, CollectionTab::class.java)
+            startActivity(intent)
+        }
+//        accountButton.setOnClickListener {
+//            val intent = Intent(this, LoginPage::class.java)
+//            startActivity(intent)
+//        }
 
         //create instance of tab bar
         val tab = findViewById<TabLayout>(R.id.tabLayout)

@@ -125,6 +125,7 @@
         android:layout_width="350dp"
         android:layout_height="40dp"
         android:background="@drawable/login_bar"
+        android:inputType="textPassword"
         android:hint="Enter Password"
         android:gravity="center"
         android:layout_marginTop="12dp"

@@ -3,41 +3,46 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="56dp"
+    android:layout_height="100dp"
     android:paddingBottom="25dp"
     android:layout_alignParentBottom="true"
-    android:background="@color/navColor">
+    android:background="#45818e">
 
     <ImageButton
-        android:id="@+id/firstButton"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:id="@+id/mapButton"
+        android:layout_width="90dp"
+        android:layout_height="85dp"
         android:layout_gravity="start|center_vertical"
-        android:layout_marginStart="16dp"
+        android:background="@drawable/map_icon"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/middleButton"
+        app:layout_constraintEnd_toStartOf="@+id/monsterButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.1" />
 
     <ImageButton
-        android:id="@+id/middleButton"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:id="@+id/monsterButton"
+        android:layout_width="130dp"
+        android:layout_height="205dp"
         android:layout_gravity="center"
+        android:background="@drawable/monster_icon"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/thirdButton"
-        app:layout_constraintStart_toEndOf="@+id/firstButton"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/accountButton"
+        app:layout_constraintStart_toEndOf="@+id/mapButton"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.307" />
 
     <ImageButton
-        android:id="@+id/thirdButton"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:id="@+id/accountButton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_gravity="end|center_vertical"
+        android:background="@drawable/account_icon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/middleButton"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/monsterButton"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

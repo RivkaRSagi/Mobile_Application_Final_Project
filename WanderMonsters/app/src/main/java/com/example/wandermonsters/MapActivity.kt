@@ -40,6 +40,7 @@ import com.google.android.gms.maps.model.Marker
 import androidx.core.graphics.createBitmap
 import java.io.File
 import kotlin.random.Random
+import android.widget.ImageButton
 
 class MapActivity : AppCompatActivity(),  OnMapReadyCallback{
 
@@ -59,6 +60,23 @@ class MapActivity : AppCompatActivity(),  OnMapReadyCallback{
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.map_layout)
+
+        val mapButton = findViewById<ImageButton>(R.id.mapButton)
+        val monsterButton = findViewById<ImageButton>(R.id.monsterButton)
+        val accountButton = findViewById<ImageButton>(R.id.accountButton)
+
+        mapButton.setOnClickListener {
+            val intent = Intent(this, MapActivity::class.java)
+            startActivity(intent)
+        }
+        monsterButton.setOnClickListener {
+            val intent = Intent(this, CollectionTab::class.java)
+            startActivity(intent)
+        }
+//        accountButton.setOnClickListener {
+//            val intent = Intent(this, LoginPage::class.java)
+//            startActivity(intent)
+//        }
 
         Thread.setDefaultUncaughtExceptionHandler(CustomExceptionHandler())
 

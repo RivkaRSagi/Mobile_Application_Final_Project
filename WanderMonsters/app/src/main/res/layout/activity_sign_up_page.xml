@@ -108,6 +108,7 @@
         android:hint="Enter Password"
         android:gravity="center"
         android:layout_marginTop="12dp"
+        android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
@@ -131,6 +132,7 @@
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/login_bar"
+        android:inputType="textPassword"
         android:gravity="center"
         android:hint="Enter Password"
         app:layout_constraintEnd_toEndOf="parent"
