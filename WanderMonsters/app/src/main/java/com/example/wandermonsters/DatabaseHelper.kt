@@ -168,7 +168,7 @@ class DatabaseHelper (context: Context): SQLiteOpenHelper(
     fun getPetMonsters(ownerID: Int, context: Context): List<ListValues.Monster_card> {
         val db = readableDatabase
         val cursor = db.rawQuery(
-            "SELECT PetMonsters.Name, PetMonsters.Type, PetMonsters.Size, PetMonsters.Weight, " +
+            "SELECT PetMonsters.Monster_ID, PetMonsters.Name, PetMonsters.Type, PetMonsters.Size, PetMonsters.Weight, " +
                     "PetMonsters.Intellect, PetMonsters.Hobby, PetMonsters.Rarity, MonsterDefinitions.Image " +
                     " FROM PetMonsters JOIN MonsterDefinitions ON PetMonsters.Type = MonsterDefinitions.Type_Name " +
                     " WHERE Owner_ID = ?",
@@ -181,6 +181,7 @@ class DatabaseHelper (context: Context): SQLiteOpenHelper(
 
         if(cursor.moveToFirst()) {
             do {
+                val id = cursor.getInt(cursor.getColumnIndexOrThrow("Monster_ID"))
                 val type = cursor.getString(cursor.getColumnIndexOrThrow("Type"))
                 val petname = cursor.getString(cursor.getColumnIndexOrThrow("Name"))
                 val size = cursor.getFloat(cursor.getColumnIndexOrThrow("Size"))
@@ -194,7 +195,7 @@ class DatabaseHelper (context: Context): SQLiteOpenHelper(
                 val imageResId = context.resources.getIdentifier(imageResource, "drawable", context.packageName)
 
 
-                val monster = ListValues.Monster_card(type,imageResId,petname,size,weight,intellect,hobby)
+                val monster = ListValues.Monster_card(id,type,imageResId,petname,size,weight,intellect,hobby)
                 monsters.add(monster)
             }while (cursor.moveToNext())
 
