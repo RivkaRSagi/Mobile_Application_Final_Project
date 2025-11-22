@@ -54,6 +54,8 @@ class MiniGameActivity : AppCompatActivity(), SensorEventListener {
     private var lastMovementTime = System.currentTimeMillis()
     private var mediaPlayer: MediaPlayer? = null
     private val decayIntervalMs = 100L
+
+    private lateinit var dbHelper: DatabaseHelper
     private val decayRunnable = object : Runnable {
         override fun run() {
             if (hasFinished) return
@@ -190,8 +192,12 @@ class MiniGameActivity : AppCompatActivity(), SensorEventListener {
 
                 button.text = "Store Monster"
 
+                //saves monster collected into the database using the userID from shared preferences
                 button.setOnClickListener {
-                    //TODO store monster object. and navigate to collection
+                    dbHelper = DatabaseHelper(this)
+                    val sharedPreferences= this.getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
+                    val currentUserID = sharedPreferences.getInt("userID", -1)
+                    dbHelper.addPetMonster(currentUserID, monster!!)
                     finish()
                 }
                 playCaptureSound()
