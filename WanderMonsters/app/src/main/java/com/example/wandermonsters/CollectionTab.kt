@@ -35,10 +35,10 @@ class CollectionTab : AppCompatActivity() {
             val intent = Intent(this, CollectionTab::class.java)
             startActivity(intent)
         }
-//        accountButton.setOnClickListener {
-//            val intent = Intent(this, LoginPage::class.java)
-//            startActivity(intent)
-//        }
+        accountButton.setOnClickListener {
+            val intent = Intent(this, Account_page::class.java)
+            startActivity(intent)
+        }
 
         //create instance of tab bar
         val tab = findViewById<TabLayout>(R.id.tabLayout)

@@ -73,10 +73,10 @@ class MapActivity : AppCompatActivity(),  OnMapReadyCallback{
             val intent = Intent(this, CollectionTab::class.java)
             startActivity(intent)
         }
-//        accountButton.setOnClickListener {
-//            val intent = Intent(this, LoginPage::class.java)
-//            startActivity(intent)
-//        }
+        accountButton.setOnClickListener {
+            val intent = Intent(this, Account_page::class.java)
+            startActivity(intent)
+        }
 
         Thread.setDefaultUncaughtExceptionHandler(CustomExceptionHandler())
 

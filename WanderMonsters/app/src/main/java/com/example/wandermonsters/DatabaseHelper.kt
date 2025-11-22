@@ -104,6 +104,21 @@ class DatabaseHelper (context: Context): SQLiteOpenHelper(
         return ownerID
     }
 
+    //get username based on owner id
+    fun getUsername(ownerID: Int): String {
+        val db = readableDatabase
+        var username = ""
+        val cursor = db.rawQuery(
+            "SELECT username FROM Accounts WHERE id = ?",
+            arrayOf(ownerID.toString())
+        )
+
+        if (cursor.moveToFirst()) {
+            username = cursor.getString(cursor.getColumnIndexOrThrow("username"))
+        }
+        cursor.close()
+        return username
+    }
 
 
     //PetMonsters functions:
@@ -115,6 +130,13 @@ class DatabaseHelper (context: Context): SQLiteOpenHelper(
             arrayOf(ownerID, thisMonster.petName, thisMonster.type, thisMonster.size, thisMonster.weight, thisMonster.intellect, thisMonster.hobby, thisMonster.rarity))
 
         db.execSQL("UPDATE MonsterDefinitions SET Discovered = 1 WHERE Type_Name = ?", arrayOf(thisMonster.type))
+    }
+
+    //function to delete all monsters in PetMonsters table
+    fun deletePetMonsters(){
+        val db = writableDatabase
+        db.delete("PetMonsters",null,null)
+        db.close()
     }
 
     //function to rename monster
@@ -149,6 +171,19 @@ class DatabaseHelper (context: Context): SQLiteOpenHelper(
         }
         cursor.close()
         return monster
+    }
+
+    fun monsterRarity(ownerID: Int, rarity: Int): Int {
+        val db = readableDatabase
+        var count = 0
+
+        val cursor = db.rawQuery("SELECT COUNT(*) FROM PetMonsters WHERE Owner_ID=? AND Rarity=?",
+            arrayOf(ownerID.toString(), rarity.toString()))
+        if (cursor.moveToFirst()) {
+            count = cursor.getInt(0)
+        }
+        cursor.close()
+        return count
     }
 
     //function to get monster id based on name, owner, and size

@@ -49,7 +49,6 @@ class LoginPage : AppCompatActivity() {
                 if (currentUserID != -1) {
                     val sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
                     sharedPreferences.edit()
-//                        .clear().apply()
                         .putBoolean("isLoggedIn", true)
                         .putInt("userID", currentUserID)
                         .apply()

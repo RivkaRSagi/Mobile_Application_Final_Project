@@ -54,6 +54,7 @@ class SignUpPage : AppCompatActivity() {
             } else {
                 dbHelper = DatabaseHelper(this)
                 dbHelper.newUser(usernameText, passwordText)
+                Toast.makeText(this, "Sign Up Successful,Returning to Main Page", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish()
