@@ -41,6 +41,7 @@ import androidx.core.graphics.createBitmap
 import java.io.File
 import kotlin.random.Random
 import android.widget.ImageButton
+import com.google.maps.android.SphericalUtil
 
 class MapActivity : AppCompatActivity(),  OnMapReadyCallback{
 
@@ -51,6 +52,8 @@ class MapActivity : AppCompatActivity(),  OnMapReadyCallback{
     private var circle: Circle? = null
     private val monsterEvents = ArrayList<Marker>()
     private var userMarker: Marker? = null
+
+    private var userCurrentLocation: LatLng? = null
 
     private val maxDistance = 30.0
     private val zoomLevel = 19f
@@ -117,11 +120,11 @@ class MapActivity : AppCompatActivity(),  OnMapReadyCallback{
 
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
-
             startLocationUpdates()
             fusedLocationClient!!.lastLocation.addOnSuccessListener { location ->
                 if (location != null) {
                     val latLng = LatLng(location.latitude, location.longitude)
+                    userCurrentLocation = latLng
                     mainMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel))
                     userMarker = mainMap.addMarker(
                         MarkerOptions()
@@ -146,14 +149,23 @@ class MapActivity : AppCompatActivity(),  OnMapReadyCallback{
             }
 
             mainMap.setOnMarkerClickListener { marker ->
-                if (marker.title == "monster_event") {
-                    monsterEvents.remove(marker)
-                    val intent = Intent(this@MapActivity, MiniGameActivity::class.java)
-
-                    marker.remove()
-                    startActivity(intent)
+                if(userCurrentLocation == null) {
+                    return@setOnMarkerClickListener false
                 }
-                true
+                val dist = SphericalUtil.computeDistanceBetween(userCurrentLocation, marker.position)
+                if(dist > 5.0) {
+                    Toast.makeText(this, "Too far! Move closer to monster.", Toast.LENGTH_LONG)
+                        .show()
+                }else{
+                    if (marker.title == "monster_event") {
+                        monsterEvents.remove(marker)
+                        val intent = Intent(this@MapActivity, MiniGameActivity::class.java)
+
+                        marker.remove()
+                        startActivity(intent)
+                    }
+                }
+                    true
             }
         }
     }
@@ -193,6 +205,7 @@ class MapActivity : AppCompatActivity(),  OnMapReadyCallback{
                 super.onLocationResult(locationResult)
                 for (location in locationResult.locations) {
                     val latLng = LatLng(location.latitude, location.longitude)
+                    userCurrentLocation = latLng
                     mainMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel), 1000, null)
 
 
