@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
 //        val newMonster = Monster.createRandomMonster(this)
 //        val newMonster2 = Monster.createRandomMonster(this)
 
-//        Log.d("MonsterCount", "Total monsters: ${dbHelper.getMonsterCount()}")
+        Log.d("MonsterCount", "Total monsters: ${dbHelper.getMonsterCount()}")
 
 
 

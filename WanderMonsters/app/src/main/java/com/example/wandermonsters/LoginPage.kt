@@ -53,6 +53,11 @@ class LoginPage : AppCompatActivity() {
                         .putInt("userID", currentUserID)
                         .apply()
 
+                    val dbHelper = DatabaseHelper(this)
+                    val dictionary = dbHelper.getMonsterCount()
+                    if (dictionary == 0) {
+                        dbHelper.initializeMonsterTypes(this)
+                    }
 //                    startActivity(Intent(this, CollectionTab::class.java))
                     startActivity(Intent(this, MapActivity::class.java))
                     finish()

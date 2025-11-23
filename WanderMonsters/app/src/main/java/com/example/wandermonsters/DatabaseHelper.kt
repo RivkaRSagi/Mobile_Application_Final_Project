@@ -243,17 +243,43 @@ class DatabaseHelper (context: Context): SQLiteOpenHelper(
 
     //MonsterDefinitions functions:
 
+    //function to populate dictionary table
+    fun dictionaryTable(context: Context): List<ListValues.Dictionary_table> {
+        val db = readableDatabase
+        val cursor = db.rawQuery("SELECT * FROM MonsterDefinitions", null)
+
+        val monsters = mutableListOf<ListValues.Dictionary_table>()
+        if(cursor.moveToFirst()) {
+            do {
+                val id = cursor.getInt(cursor.getColumnIndexOrThrow("Type_Id"))
+                val type = cursor.getString(cursor.getColumnIndexOrThrow("Type_Name"))
+                val rarity = cursor.getInt(cursor.getColumnIndexOrThrow("Rarity"))
+                val discovered = cursor.getInt(cursor.getColumnIndexOrThrow("Discovered"))
+                val image = cursor.getString(cursor.getColumnIndexOrThrow("Image"))
+                val imageResource = image.substringBefore(".")
+                val imageResId = context.resources.getIdentifier(imageResource, "drawable", context.packageName)
+
+                val monster = ListValues.Dictionary_table(imageResId,type,rarity,discovered)
+                monsters.add(monster)
+                }while (cursor.moveToNext())
+        }
+        cursor.close()
+        return monsters
+    }
+
+
     //function to set discovered booleans according to logged in user
     fun setDiscovered(ownerID: Int){
         val dbwrite = writableDatabase
         val dbread = readableDatabase
         val cursor = dbread.rawQuery(
-            "SELECT Type_Name FROM MonsterDefinitions WHERE Owner_ID = ?",
+            "SELECT DISTICT Type FROM PetMonsters WHERE Owner_ID = ?",
             arrayOf(ownerID.toString())
         )
         while (cursor.moveToNext()){
+            val typeName = cursor.getString(cursor.getColumnIndexOrThrow("Type"))
             dbwrite.execSQL("UPDATE MonsterDefinitions SET Discovered = 1 WHERE Type_Name = ?",
-                arrayOf(cursor.getString(cursor.getColumnIndexOrThrow("Type_Name"))))
+                arrayOf(typeName))
         }
 
         cursor.close()
@@ -272,6 +298,7 @@ class DatabaseHelper (context: Context): SQLiteOpenHelper(
 //        db.execSQL("DELETE FROM MonsterDefinitions")
 //    }
 
+    //get the number of monsters in monster definitions, this is used to check if the monster definitions table is empty
     fun getMonsterCount(): Int {
         val db = readableDatabase
         val cursor = db.rawQuery("SELECT COUNT(*) FROM MonsterDefinitions", null)
@@ -313,7 +340,7 @@ class DatabaseHelper (context: Context): SQLiteOpenHelper(
         db.execSQL("INSERT INTO MonsterDefinitions (Type_Name, Image, Discovered, Rarity) VALUES (?,?,?,?)",
             arrayOf("Rattimus", "rattimus.png", 0, 1))
         db.execSQL("INSERT INTO MonsterDefinitions (Type_Name, Image, Discovered, Rarity) VALUES (?,?,?,?)",
-            arrayOf("Salmoosus", "salmosus.png", 0, 1))
+            arrayOf("Salmoosus", "salmoosus.png", 0, 1))
 
         //rare monsters
         db.execSQL("INSERT INTO MonsterDefinitions (Type_Name, Image, Discovered, Rarity) VALUES (?,?,?,?)",
@@ -323,7 +350,7 @@ class DatabaseHelper (context: Context): SQLiteOpenHelper(
         db.execSQL("INSERT INTO MonsterDefinitions (Type_Name, Image, Discovered, Rarity) VALUES (?,?,?,?)",
             arrayOf("Freezy", "freezy.png", 0, 2))
         db.execSQL("INSERT INTO MonsterDefinitions (Type_Name, Image, Discovered, Rarity) VALUES (?,?,?,?)",
-            arrayOf("PsyCactus", "psyactus.png", 0, 2))
+            arrayOf("PsyCactus", "psycactus.png", 0, 2))
         db.execSQL("INSERT INTO MonsterDefinitions (Type_Name, Image, Discovered, Rarity) VALUES (?,?,?,?)",
             arrayOf("SkelyWalker", "skelywalker.png", 0, 2))
 
