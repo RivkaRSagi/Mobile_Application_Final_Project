@@ -64,14 +64,9 @@ class MapActivity : AppCompatActivity(),  OnMapReadyCallback{
         enableEdgeToEdge()
         setContentView(R.layout.map_layout)
 
-        val mapButton = findViewById<ImageButton>(R.id.mapButton)
         val monsterButton = findViewById<ImageButton>(R.id.monsterButton)
         val accountButton = findViewById<ImageButton>(R.id.accountButton)
 
-        mapButton.setOnClickListener {
-            val intent = Intent(this, MapActivity::class.java)
-            startActivity(intent)
-        }
         monsterButton.setOnClickListener {
             val intent = Intent(this, CollectionTab::class.java)
             startActivity(intent)
