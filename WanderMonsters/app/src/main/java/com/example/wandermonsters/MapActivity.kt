@@ -152,15 +152,16 @@ class MapActivity : AppCompatActivity(),  OnMapReadyCallback{
                 if(userCurrentLocation == null) {
                     return@setOnMarkerClickListener false
                 }
-                val dist = SphericalUtil.computeDistanceBetween(userCurrentLocation, marker.position)
-                if(dist > 5.0) {
+                var dist = FloatArray(1)
+                Location.distanceBetween(userCurrentLocation!!.latitude, userCurrentLocation!!.longitude, marker.position.latitude, marker.position.longitude, dist)
+                if(dist[0] > maxDistance) {
                     Toast.makeText(this, "Too far! Move closer to monster.", Toast.LENGTH_LONG)
                         .show()
                 }else{
                     if (marker.title == "monster_event") {
-                        monsterEvents.remove(marker)
                         val intent = Intent(this@MapActivity, MiniGameActivity::class.java)
 
+                        monsterEvents.remove(marker)
                         marker.remove()
                         startActivity(intent)
                     }
@@ -237,7 +238,7 @@ class MapActivity : AppCompatActivity(),  OnMapReadyCallback{
                     animateMarker(userMarker!!, latLng)
 
                     if (monsterEvents.size < 5) {
-                        val eventLocation = generateEventIcons(latLng, maxDistance - 6)
+                        val eventLocation = generateEventIcons(latLng, maxDistance + 10)
 
                         val random = Random.nextInt(1, 100)
                         if (random >= 1 && random <= 25) {
@@ -264,7 +265,7 @@ class MapActivity : AppCompatActivity(),  OnMapReadyCallback{
 
                         Location.distanceBetween(location.latitude, location.longitude, marker.position.latitude, marker.position.longitude, distance)
 
-                        if (distance[0] > maxDistance) {
+                        if (distance[0] > maxDistance + 20) {
                             iterator.remove()
                             marker.remove()
                         }
