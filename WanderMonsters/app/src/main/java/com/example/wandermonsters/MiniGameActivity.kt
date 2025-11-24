@@ -182,6 +182,7 @@ class MiniGameActivity : AppCompatActivity(), SensorEventListener {
 
             if (progress >= 100f && !hasFinished) {
                 hasFinished = true
+                image.clearColorFilter()
                 handler.removeCallbacks(decayRunnable)
 
                 val layout = findViewById<View>(R.id.container)
