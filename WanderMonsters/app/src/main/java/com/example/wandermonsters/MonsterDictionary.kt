@@ -24,6 +24,9 @@ import android.widget.TextView
 // * create an instance of this fragment.
 // */
 class MonsterDictionary : Fragment() {
+    private lateinit var dbHelper: DatabaseHelper
+    private lateinit var monster : List<ListValues.Dictionary_table>
+
 //    // TODO: Rename and change types of parameters
 //    private var param1: String? = null
 //    private var param2: String? = null
@@ -46,12 +49,16 @@ class MonsterDictionary : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val table = view.findViewById<TableLayout>(R.id.monsterTable)
+        dbHelper = DatabaseHelper(requireContext())
+        val tableData = dbHelper.dictionaryTable(requireContext())
+        monster = tableData
 
-        val tableData = listOf(
-            ListValues.Dictionary_table(R.drawable.snailboo, "SnailBoo", "Common"),
-            ListValues.Dictionary_table(R.drawable.graylock, "GrayLock", "Rare"),
-            ListValues.Dictionary_table(R.drawable.bonzoa, "Bonzoa", " Super Rare")
-        )
+
+//        val tableData = listOf(
+//            ListValues.Dictionary_table(R.drawable.snailboo, "SnailBoo", "Common"),
+//            ListValues.Dictionary_table(R.drawable.graylock, "GrayLock", "Rare"),
+//            ListValues.Dictionary_table(R.drawable.bonzoa, "Bonzoa", " Super Rare")
+//        )
 
         val columns = 3
         for (i in tableData.indices step columns){
@@ -88,7 +95,14 @@ class MonsterDictionary : Fragment() {
                     }
 
                     val textView2 = TextView(context).apply {
-                        setText(cellData.rarity)
+                        text = when (cellData.rarity) {
+                            0 -> "Common"
+                            1 -> "Uncommon"
+                            2 -> "Rare"
+                            3 -> "Epic"
+                            4 -> "Legendary"
+                            else -> ""
+                        }
                         gravity = Gravity.CENTER
                         typeface = Typeface.DEFAULT_BOLD
                         textSize = 14f
