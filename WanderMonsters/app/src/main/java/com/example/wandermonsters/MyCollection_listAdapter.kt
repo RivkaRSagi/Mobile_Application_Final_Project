@@ -77,7 +77,7 @@ class MyCollection_listAdapter (
                 item.pet_name = newName
                 petName.setText(newName)
                 notifyDataSetChanged()
-                false
+                true
             } else {
                 false
             }
