@@ -125,6 +125,7 @@ class MiniGameActivity : AppCompatActivity(), SensorEventListener {
             getResources().getIdentifier(monster?.type?.lowercase(), "drawable", packageName)
 
         image.setImageDrawable(AppCompatResources.getDrawable(this, monsterImageId))
+        image.setColorFilter(Color.BLACK, android.graphics.PorterDuff.Mode.SRC_ATOP)
         image.setBackgroundResource(R.drawable.image_shadow)
 
         button.setOnClickListener {
