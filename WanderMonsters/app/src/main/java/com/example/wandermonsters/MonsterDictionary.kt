@@ -1,5 +1,7 @@
 package com.example.wandermonsters
 
+import android.graphics.Color
+import android.graphics.PorterDuff
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.Gravity
@@ -13,31 +15,9 @@ import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 
-//// TODO: Rename parameter arguments, choose names that match
-//// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-//private const val ARG_PARAM1 = "param1"
-//private const val ARG_PARAM2 = "param2"
-//
-///**
-// * A simple [Fragment] subclass.
-// * Use the [MonsterDictionary.newInstance] factory method to
-// * create an instance of this fragment.
-// */
 class MonsterDictionary : Fragment() {
     private lateinit var dbHelper: DatabaseHelper
     private lateinit var monster : List<ListValues.Dictionary_table>
-
-//    // TODO: Rename and change types of parameters
-//    private var param1: String? = null
-//    private var param2: String? = null
-//
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        arguments?.let {
-//            param1 = it.getString(ARG_PARAM1)
-//            param2 = it.getString(ARG_PARAM2)
-//        }
-//    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -79,13 +59,26 @@ class MonsterDictionary : Fragment() {
                     }
 
                     val imageView = ImageView(context).apply {
+
                         setImageResource(cellData.monster_image)
+                        if (cellData.discovered == 1) {
+                            clearColorFilter()
+                        } else {
+                            colorFilter = android.graphics.PorterDuffColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY)
+
+                        }
                         layoutParams= LinearLayout.LayoutParams(224,224)
                         scaleType = ImageView.ScaleType.CENTER_CROP
                     }
 
                     val textView = TextView(context).apply {
-                        setText(cellData.monster_Type)
+
+                        if (cellData.discovered == 1) {
+                            setText(cellData.monster_Type)
+                        } else{
+                            setText("???")
+                        }
+
                         gravity = Gravity.CENTER
                         textSize = 18f
                         layoutParams = LinearLayout.LayoutParams(
@@ -95,13 +88,17 @@ class MonsterDictionary : Fragment() {
                     }
 
                     val textView2 = TextView(context).apply {
-                        text = when (cellData.rarity) {
-                            0 -> "Common"
-                            1 -> "Uncommon"
-                            2 -> "Rare"
-                            3 -> "Epic"
-                            4 -> "Legendary"
-                            else -> ""
+                        if (cellData.discovered == 1) {
+                            text = when (cellData.rarity) {
+                                0 -> "Common"
+                                1 -> "Uncommon"
+                                2 -> "Rare"
+                                3 -> "Epic"
+                                4 -> "Legendary"
+                                else -> ""
+                            }
+                        } else{
+                            setText("???")
                         }
                         gravity = Gravity.CENTER
                         typeface = Typeface.DEFAULT_BOLD

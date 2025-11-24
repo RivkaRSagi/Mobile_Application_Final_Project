@@ -273,7 +273,7 @@ class DatabaseHelper (context: Context): SQLiteOpenHelper(
         val dbwrite = writableDatabase
         val dbread = readableDatabase
         val cursor = dbread.rawQuery(
-            "SELECT DISTICT Type FROM PetMonsters WHERE Owner_ID = ?",
+            "SELECT DISTINCT Type FROM PetMonsters WHERE Owner_ID = ?",
             arrayOf(ownerID.toString())
         )
         while (cursor.moveToNext()){

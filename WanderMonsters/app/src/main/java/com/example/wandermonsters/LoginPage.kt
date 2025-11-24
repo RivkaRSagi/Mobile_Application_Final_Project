@@ -35,15 +35,18 @@ class LoginPage : AppCompatActivity() {
         val password = findViewById<EditText>(R.id.password)
         val loginButton = findViewById<Button>(R.id.loginButton)
 
+        //on click listener for login button
         loginButton.setOnClickListener {
             val usernameText = username.text.toString().trim()
             val passwordText = password.text.toString().trim()
 
+            //if username or password is empty
             if (usernameText.isEmpty() || passwordText.isEmpty()){
                 Toast.makeText(this, "Please enter username and password", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
+            //if user account is validated, retrieve user id and store in shared preferences
             if (dbHelper.validateUserAccount(usernameText, passwordText)){
                 val currentUserID = dbHelper.getOwnerID(usernameText, passwordText)
                 if (currentUserID != -1) {
@@ -58,6 +61,11 @@ class LoginPage : AppCompatActivity() {
                     if (dictionary == 0) {
                         dbHelper.initializeMonsterTypes(this)
                     }
+
+                    //reset monster definitions to undiscovered
+                    dbHelper.resetDiscovered()
+                    //set monster definitions to discovered based on user
+                    dbHelper.setDiscovered(currentUserID)
 //                    startActivity(Intent(this, CollectionTab::class.java))
                     startActivity(Intent(this, MapActivity::class.java))
                     finish()

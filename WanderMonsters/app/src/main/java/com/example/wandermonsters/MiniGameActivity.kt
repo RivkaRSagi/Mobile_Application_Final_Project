@@ -192,12 +192,13 @@ class MiniGameActivity : AppCompatActivity(), SensorEventListener {
 
                 button.text = "Store Monster"
 
-                //saves monster collected into the database using the userID from shared preferences
+                //saves monster collected into the database using the userID from shared preferences and sets monster to discovered
                 button.setOnClickListener {
                     dbHelper = DatabaseHelper(this)
                     val sharedPreferences= this.getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
                     val currentUserID = sharedPreferences.getInt("userID", -1)
                     dbHelper.addPetMonster(currentUserID, monster!!)
+                    dbHelper.setDiscovered(currentUserID)
                     finish()
                 }
                 playCaptureSound()
