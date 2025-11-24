@@ -193,6 +193,8 @@ class MiniGameActivity : AppCompatActivity(), SensorEventListener {
                 text.visibility = View.VISIBLE
 
                 button.text = "Store Monster"
+                button.backgroundTintList = android.content.res.ColorStateList.valueOf(Color.parseColor("#76a5af"))
+
 
                 //saves monster collected into the database using the userID from shared preferences and sets monster to discovered
                 button.setOnClickListener {

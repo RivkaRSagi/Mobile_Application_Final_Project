@@ -46,6 +46,7 @@ class MyCollection_listAdapter (
         val weight = view.findViewById<TextView>(R.id.weight)
         val hobby = view.findViewById<TextView>(R.id.hobby)
 
+
         monsterType.text=item.monster_type
         monsterImage.setImageResource(item.monster_picture)
         petName.setText(item.pet_name)
@@ -53,6 +54,16 @@ class MyCollection_listAdapter (
         intellect.text=item.intellect.toString()
         weight.text=item.weight.toString()
         hobby.text=item.hobby
+        val backgroundColor = when (item.rarity) {
+            0 -> R.drawable.common_back
+            1 -> R.drawable.uncommon_back
+            2 -> R.drawable.blueback
+            3 -> R.drawable.epic_back
+            4 -> R.drawable.legendary_back
+            else -> R.drawable.blueback
+        }
+        view.setBackgroundResource(backgroundColor)
+
 
         //change pet name in monster card once user clicks enter
         petName.setOnEditorActionListener { v, actionId, event ->

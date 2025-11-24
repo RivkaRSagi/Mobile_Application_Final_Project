@@ -45,16 +45,28 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+        android:id="@+id/watch_video"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:backgroundTint="#a64d79"
+        android:text="Watch Promotion video"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/username_placeholder" />
+
+    <Button
         android:id="@+id/delete_collection"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="232dp"
+        android:layout_marginTop="24dp"
         android:backgroundTint="#e06666"
         android:text="Delete my Collection"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username_placeholder" />
+        app:layout_constraintTop_toBottomOf="@+id/watch_video" />
 
     <TextView
         android:id="@+id/textView6"

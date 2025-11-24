@@ -11,11 +11,12 @@
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="#C6E2FF"
+        android:background="#a64d79"
         android:paddingTop="25dp"
         android:text="Collections"
         android:textAlignment="center"
         android:textSize="20sp"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -32,10 +33,10 @@
         app:layout_constraintTop_toBottomOf="@+id/header"
         app:tabGravity="fill"
         app:tabMode="fixed"
-        app:tabIndicatorColor="@color/black"
+        app:tabIndicatorColor="#a64d79"
         app:tabIndicatorHeight="4dp"
-        app:tabSelectedTextColor="@color/black"
-        app:tabTextColor="@color/black"/>
+        app:tabSelectedTextColor="#134f5c"
+        app:tabTextColor="#134f5c"/>
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"

@@ -230,7 +230,7 @@ class DatabaseHelper (context: Context): SQLiteOpenHelper(
                 val imageResId = context.resources.getIdentifier(imageResource, "drawable", context.packageName)
 
 
-                val monster = ListValues.Monster_card(id,type,imageResId,petname,size,weight,intellect,hobby)
+                val monster = ListValues.Monster_card(id,type,imageResId,petname, rarity, size, weight, intellect, hobby)
                 monsters.add(monster)
             }while (cursor.moveToNext())
 

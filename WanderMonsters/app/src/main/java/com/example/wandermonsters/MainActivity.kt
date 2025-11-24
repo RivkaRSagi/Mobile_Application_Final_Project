@@ -75,6 +75,13 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        //On click listener for watching video
+        val video_page = findViewById<Button>(R.id.video)
+        video_page.setOnClickListener {
+            val intent = Intent(this, video::class.java)
+            startActivity(intent)
+        }
+
 
 
 //        val collection = findViewById<Button>(R.id.collectionButton)

@@ -73,6 +73,13 @@ class Account_page : AppCompatActivity() {
 
         }
 
+        //watch video functionality
+        val watchVideoButton = findViewById<Button>(R.id.watch_video)
+        watchVideoButton.setOnClickListener {
+            val intent = Intent(this, video::class.java)
+            startActivity(intent)
+        }
+
         //delete my collection functionality
         val deleteCollectionButton = findViewById<Button>(R.id.delete_collection)
         deleteCollectionButton.setOnClickListener {

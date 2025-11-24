@@ -15,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WanderMonsters">
         <activity
+            android:name=".video"
+            android:exported="false" />
+        <activity
             android:name=".Account_page"
             android:exported="false" />
         <activity
@@ -43,7 +46,7 @@
         <activity
             android:name=".MiniGameActivity"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
